@@ -1,0 +1,48 @@
+#***************************************************************
+#---------------------------------------------------------------
+# Cliente Bancario
+#---------------------------------------------------------------
+class ClienteBancario:
+    __nombres: str = None
+    __apellidos: str = None
+    __edad: int = 0
+    __balanceDeCuenta: float = 0.0
+    def __init__(self, nombres:str, apellidos: str, edad:int = 0, balanceDeCuenta:float = 0):
+        self.__validarEdad(edad)
+        self.__validarCantidad(balanceDeCuenta)
+        self.nombres = nombres
+        self.apellidos = apellidos
+        self.__edad = edad
+        self.blanceDeCuenta = balanceDeCuenta
+    def getNombreCompleto(self) -> str:
+        return self.nombres + " " + self.apellidos
+    def __mandarEmail(self, titulo:str, texto: str) -> None:
+        print('mandar email: '+ titulo + ' con texto: ' + texto)
+    def __enviarBalanceAl_Banco(self, cantidad:float) -> None:
+        print('Enviando cantidad: '+ str(cantidad) + ' al banco ...')
+    #-----------------------------------------------------------
+    # Método privado con dos guiones bajos
+    # Si la edad es menor a 18 años genera un error
+    #-----------------------------------------------------------
+    def __validarEdad(self, edad:int) -> None:
+        if edad < 18:
+            raise Exception('Es menor de Edad')
+    def imprimirInfo(self) -> str:
+        return 'Nombre: ' + self.getNombreCompleto() + ', Edad: '+ str(self.__edad) + ', balance: ' + str(self.__balanceDeCuenta)
+    #-----------------------------------------------------------
+    # Método privado que revisa si el balance es negativo
+    # y genera un error
+    #-----------------------------------------------------------
+    def __validarCantidad(self, balanceDeCuenta:float) -> None:
+        if balanceDeCuenta < 0:
+            raise Exception('El balance en la cuenta no puede ser cero')
+    def guardarDinero(self, cantidad:float) -> None:
+        self.__balanceDeCuenta = self.balanceDeCuenta + cantidad
+        self.__mandarEmail('$$$$Guandando Deposito$$$$', ' se recibieron ' + str(cantidad))
+    def retirarDinero(self, cantidad:float) -> None:
+        cantidadFinal = self.__balanceDeCuenta - cantidad
+        self.__validarCantidad(cantidadFinal)
+        self.__balanceDeCuenta = cantidadFinal
+        self.__mandarEmail('----retirando dinero----', ' se retiró ' + str(cantidad))
+        self.__enviarBalanceAlBanco(cantidad)
+#***************************************************************

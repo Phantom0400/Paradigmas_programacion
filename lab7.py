@@ -11,7 +11,7 @@ try:
     cliente = ClienteBancario('Jaime Andrade', 'Hernandez Sánchez', 28, 0.0)
     cliente.guardarDinero(300)
     print(cliente.imprimirInfo())
-    cliente.reintentarDinero(400)
+    cliente.retirarDinero(400)
     print(cliente.imprimirInfo())
 #---------------------------------------------------------------
 # Exception es el objeto mas general de error
@@ -25,5 +25,5 @@ except Exception as ex:
 #---------------------------------------------------------------
 # Forma Correcta
 #---------------------------------------------------------------
-print(clientes.nombres)
+print(cliente.nombres)
 #***************************************************************
