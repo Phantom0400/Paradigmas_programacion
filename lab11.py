@@ -36,7 +36,7 @@ def subdivision_recursiva(nodo:Nodo, k:int):
     d_ = float(0.5*nodo.profundidad)
 
     p = cuantas_contiene(nodo.x0, nodo.y0, nodo.z0, w_, h_, d_, nodo.particulas)
-    nodo.x1 = Nodo(nodo.x0, nodo.z0, w_, h_, d_, p)
+    nodo.x1 = Nodo(nodo.x0, nodo.y0, nodo.z0, w_, h_, d_, p)
     subdivision_recursiva(nodo.x1, k)
 
     p = cuantas_contiene(nodo.x0, nodo.y0 + h_, nodo.z0, w_, h_, d_, nodo.particulas)
@@ -48,7 +48,7 @@ def subdivision_recursiva(nodo:Nodo, k:int):
     subdivision_recursiva(nodo.x3, k)
 
     p = cuantas_contiene(nodo.x0 + w_, nodo.y0 + h_, nodo.z0, w_, h_, d_, nodo.particulas)
-    nodo.x4 = Nodo(nodo.x0 + w_, nodo.y0 + h_, w_, h_, d_, p)
+    nodo.x4 = Nodo(nodo.x0 + w_, nodo.y0 + h_, nodo.z0, w_, h_, d_, p)
     subdivision_recursiva(nodo.x4, k)
 
     p = cuantas_contiene(nodo.x0, nodo.y0, nodo.z0 + d_, w_, h_, d_, nodo.particulas)
@@ -56,11 +56,11 @@ def subdivision_recursiva(nodo:Nodo, k:int):
     subdivision_recursiva(nodo.x5, k)
 
     p = cuantas_contiene(nodo.x0, nodo.y0 + h_, nodo.z0 + d_, w_, h_, d_, nodo.particulas)
-    nodo.x6 = Nodo(nodo.x0, nodo.yo + h_, nodo.z0 + d_, w_, h_, d_, p)
+    nodo.x6 = Nodo(nodo.x0, nodo.y0 + h_, nodo.z0 + d_, w_, h_, d_, p)
     subdivision_recursiva(nodo.x6, k)
 
     p = cuantas_contiene(nodo.x0 + w_, nodo.y0, nodo.z0 + d_, w_, h_, d_, nodo.particulas)
-    nodo.x7 = Nodo(nodo.x + w_, nodo.y0, nodo.z0 + d_, w_, h_, d_, nodo.particulas)
+    nodo.x7 = Nodo(nodo.x0 + w_, nodo.y0, nodo.z0 + d_, w_, h_, d_, p)
     subdivision_recursiva(nodo.x7, k)
 
     p = cuantas_contiene(nodo.x0 + w_, nodo.y0 + h_, nodo.z0 + d_, w_, h_, d_, nodo.particulas)
@@ -72,7 +72,7 @@ def subdivision_recursiva(nodo:Nodo, k:int):
 def cuantas_contiene(x:float, y:float, z:float, w:float, h:float, d:float, particulas):
     pts = []
     for particula in particulas:
-        if particula.x >= x and particulas.x <= x + w and partiucla.y >= y and particula.y <= y + h and particula.z >= z and particula.z <= z + d:
+        if particula.x >= x and particula.x <= x + w and particula.y >= y and particula.y <= y + h and particula.z >= z and particula.z <= z + d:
             pts.append(particula)
     return pts
 
@@ -88,7 +88,7 @@ def encontrar_hijos(nodo):
 class Octree():
     def __init__(self, k:int, n:int):
         self.umbral = k
-        self.particulas = [Particula(random.uniform(0, 10), random(0, 10), random.unifom(0, 10)) for x in range(n)]
+        self.particulas = [Particula(random.uniform(0, 10), random.uniform(0, 10), random.uniform(0, 10)) for x in range(n)]
         self.root = Nodo(0, 0, 0, 10, 10, 10, self.particulas)
 
     def add_particula(self, x:float, y:float, z:float):
@@ -110,7 +110,7 @@ class Octree():
         plt.show()
         return None
 
-octree = Octree(1, 100)
+octree = Octree(1, 1000)
 octree.subdividir()
 octree.visualizacion()
 #********************************************************
